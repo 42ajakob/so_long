@@ -1,29 +1,62 @@
-NAME	= so_long
-HEADERS	= -I ./include -I ~/MLX42/include
-LIBS	= ~/MLX42/build/libmlx42.a -ldl -pthread -lm -Iinclude -lglfw -L "/Users/ajakob/homebrew/Cellar/glfw/3.3.8/lib/" -framework Cocoa -framework OpenGL -framework IOKit
-FLAGS	= -Wall -Wextra -Werror -Wunreachable-code -Ofast
+NAME	:= Game
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+LIBMLX	:= ./MLX42
 
-SRCS	= $(shell find . -name "*.c")
-OBJS	= ${SRCS:.c=.o}
+HEADERS	:= -I ~/.brew/include/ -I $(LIBMLX)/include/
+LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
+SRCS	:= $(shell find . -iname "*.c")
+OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(NAME)
 
+MLX42:
+	@git clone https://github.com/codam-coding-college/MLX42.git $(LIBMLX)
+
+rmMLX42:
+	@rm -rf $(LIBMLX)
+
+42HOMEBREW:
+	@curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+
+rm42HOMEBREW:
+	@rm -rf ~/.brew
+	@rm -f ~/.brewconfig.zsh
+	@echo "remove brew from .zshrc"
+
+GLFW:
+	@brew install glfw
+
+rmGLFW:
+	@brew uninstall glfw
+
+CMAKE:
+	@brew install cmake
+
+rmCMAKE:
+	@brew uninstall cmake
+
+install:
+	${MLX42} && ${42HOMEBREW} && $(GLFW) && $(CMAKE)
+
+remove:
+	${rmMLX42} && ${rm42HOMEBREW}
+
 libmlx:
-	@cmake ~/MLX42 -B ~/MLX42/build && make -C ~/MLX42/build -j4
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<) "
 
 $(NAME): $(OBJS)
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
 	@rm -f $(OBJS)
-	@rm -rf ~/MLX42/build
+	@rm -rf $(LIBMLX)/build
 
 fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re, libmlx
+.PHONY: all, clean, fclean, re, libmlx, install, remove, MLX42, rmMLX42, 42HOMEBREW, rm42HOMEBREW, GLFW, rmGLFW, CMAKE, rmCMAKE
