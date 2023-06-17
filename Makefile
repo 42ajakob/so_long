@@ -1,10 +1,10 @@
 NAME	:= Game
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
-LIBMLX	:= ./MLX42
+LIBMLX	:= ./libs/MLX42
 
-HEADERS	:= -I ~/.brew/include/ -I $(LIBMLX)/include/
+HEADERS	:= -I /Users/$(USER)/.brew/include/ -I $(LIBMLX)/include/
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
-SRCS	:= $(shell find . -iname "*.c")
+SRCS	:= $(shell find ./ -iname "*.c")
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(NAME)
@@ -19,21 +19,19 @@ rmMLX42:
 	@curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
 
 rm42HOMEBREW:
-	@rm -rf ~/.brew
-	@rm -f ~/.brewconfig.zsh
-	@echo "remove brew from .zshrc"
+	@brew || rm -rf ~/.brew && rm -f ~/.brewconfig.zsh && echo "Remove brew from .zshrc"
 
 GLFW:
-	@brew install glfw
+	@brew list glfw || brew install glfw
 
 rmGLFW:
-	@brew uninstall glfw
+	@brew list glfw || brew uninstall glfw
 
 CMAKE:
-	@brew install cmake
+	@brew list cmake || brew install cmake
 
 rmCMAKE:
-	@brew uninstall cmake
+	@brew list cmake || brew uninstall cmake
 
 install:
 	${MLX42} && ${42HOMEBREW} && $(GLFW) && $(CMAKE)
@@ -51,12 +49,13 @@ $(NAME): $(OBJS)
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
-	@rm -f $(OBJS)
-	@rm -rf $(LIBMLX)/build
+	@rm -f $(OBJS) && rm -rf $(LIBMLX)/build
 
 fclean: clean
 	@rm -f $(NAME)
 
-re: fclean all
+re:
+	@make fclean
+	@make
 
-.PHONY: all, clean, fclean, re, libmlx, install, remove, MLX42, rmMLX42, 42HOMEBREW, rm42HOMEBREW, GLFW, rmGLFW, CMAKE, rmCMAKE
+.PHONY: re, all, clean, fclean, libmlx, install, remove, MLX42, rmMLX42, 42HOMEBREW, rm42HOMEBREW, GLFW, rmGLFW, CMAKE, rmCMAKE
