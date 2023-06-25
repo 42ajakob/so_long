@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:22:46 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/17 19:06:47 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/06/25 01:20:49 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,44 @@ static void ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
-static void	hook(void *param)
+void my_keyhook(mlx_key_data_t keydata, void* param)
 {
 	img_t	*img = NULL;
 
 	img = param;
-	if (mlx_is_key_down(img->mlx, MLX_KEY_ESCAPE))
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(img->mlx);
-	if (mlx_is_key_down(img->mlx, MLX_KEY_UP))
-		img->player->instances[0].y -= 16;
-	if (mlx_is_key_down(img->mlx, MLX_KEY_DOWN))
-		img->player->instances[0].y += 16;
-	if (mlx_is_key_down(img->mlx, MLX_KEY_LEFT))
-		img->player->instances[0].x -= 16;
-	if (mlx_is_key_down(img->mlx, MLX_KEY_RIGHT))
-		img->player->instances[0].x += 16;
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
+	{
+		write(1, "<Up>\n", 5);
+		img->P->instances[0].y -= 16;
+	}
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_RELEASE)
+	{
+		write(1, "<Down>\n", 7);
+		img->P->instances[0].y += 16;
+	}
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE)
+	{
+		write(1, "<Left>\n", 7);
+		img->P->instances[0].x -= 16;
+	}
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE)
+	{
+		write(1, "<Right>\n", 8);
+		img->P->instances[0].x += 16;
+	}
 }
 
-
-
-int32_t	main(void)
+int32_t	main(int argc, char **argv)
 {
 	img_t	img;
 
+	if (!(print_map(argc, &*argv)))
+	{
+		printf("Map is not valid.\n");
+		return (EXIT_FAILURE);
+	}
 	img.mlx = mlx_init(WIDTH, HEIGHT, "League of Pain", true);
 	if (!img.mlx)
 		ft_error();
@@ -53,11 +68,13 @@ int32_t	main(void)
 	if (!texture)
         ft_error();
 
-	img.player = mlx_texture_to_image(img.mlx, texture);
-	if (!img.player || (mlx_image_to_window(img.mlx, img.player, 0, 0) < 0))
+	img.P = mlx_texture_to_image(img.mlx, texture);
+	if (!img.P || (mlx_image_to_window(img.mlx, img.P, 0, 0) < 0))
 		ft_error();
-
-	mlx_loop_hook(img.mlx, hook, &img);
+	
+	img.P->instances[0].x = 540;
+	img.P->instances[0].y = 360;
+	mlx_key_hook(img.mlx, &my_keyhook, &img);
 	mlx_loop(img.mlx);
 	mlx_terminate(img.mlx);
 	return (EXIT_SUCCESS);
