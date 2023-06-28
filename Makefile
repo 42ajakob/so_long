@@ -1,9 +1,9 @@
-NAME	:= Game
+NAME	:= Minecraft
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 LIBMLX	:= ./libs/MLX42
 
-HEADERS	:= -I /Users/$(USER)/.brew/include/ -I $(LIBMLX)/include/
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
+HEADERS	:= -I /Users/$(USER)/homebrew/include/ -I $(LIBMLX)/include/
+LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/homebrew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
 SRCS	:= $(shell find ./ -iname "*.c")
 OBJS	:= ${SRCS:.c=.o}
 
@@ -15,11 +15,14 @@ MLX42:
 rmMLX42:
 	@rm -rf $(LIBMLX)
 
-42HOMEBREW:
-	@curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+HOMEBREW:
+	@git clone https://github.com/Homebrew/brew ~/homebrew
+	@eval "$(homebrew/bin/brew shellenv)"
+	@brew update --force --quiet
+	@chmod -R go-w "$(brew --prefix)/share/zsh"
 
 rm42HOMEBREW:
-	@brew || rm -rf ~/.brew && rm -f ~/.brewconfig.zsh && echo "Remove brew from .zshrc"
+	@brew || rm -rf ~/homebrew
 
 GLFW:
 	@brew list glfw || brew install glfw

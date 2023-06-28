@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:34:51 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/25 07:55:41 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/06/28 03:54:10 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,19 @@
 
 typedef struct img_s
 {
+	char		**map;
 	mlx_t* 		mlx;
 	mlx_image_t	*W;
-	mlx_image_t	*F_S;
+	mlx_image_t	*FS;
+	int			F_S;
 	mlx_image_t *P;
 	mlx_image_t	*C;
+	int			Co;
 	mlx_image_t	*E;
 } img_t;
 
-typedef struct map_s
-{
-	char	**map;
-	int		width;
-	int		height;
-} map_t;
-
 char	*get_next_line(int fd);
-int		print_map(int argc, char **argv);
+char	**check_map(int argc, char **argv);
 int		DFS(char **grid, int x, int y, int *E, int *C);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_map.c                                        :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 19:52:51 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/25 08:32:45 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/06/28 02:09:13 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ static void	free_ptr(char **ptr)
 	free(ptr);
 }
 
-static int	FFL(char **map, int C)
+static int	FFL(char **map, char *argv, int C)
 {
 	char **grid;
 	int Exit;
@@ -159,7 +159,14 @@ static int	FFL(char **map, int C)
 	Coll = 0;
 	x = 0;
 	y = 0;
-	grid = map;
+	grid = malloc(sizeof(char *) * (map_size(argv) + 1));
+	while (map[y])
+	{
+		grid[y] = ft_strdup(map[y]);
+		y++;
+	}
+	grid[y] = NULL;
+	y = 0;
 	while (!(ft_strchr(grid[y], 'P')))
 		y++;
 	while (grid[y][x] != 'P')
@@ -194,33 +201,32 @@ int	DFS(char **grid, int x, int y, int *E, int *C)
 	return (1);
 }
 
-static int num_to_img(void)
-{
-	return (1);
-}
-
-int print_map(int argc, char **argv)
+char **check_map(int argc, char **argv)
 {
 	char	**map;
 	int		C;
 	int 	fd;
 	int		y;
+	int		i;
 
 	C = 0;
+	i = 0;
 	y = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (!(argc == 2) || !(fd) || !(valid_name(argv[1], ".ber", 4)))
-		return (0);
-	map = malloc(sizeof(char *) * map_size(argv[1]) + 1);
+		return (NULL);
+	map = malloc(sizeof(char *) * (map_size(argv[1]) + 1));
 	if (!(map))
-		return (0);
+		return (NULL);
 	while ((map[y] = get_next_line(fd)))
 	{
 		if (ft_strlen(map[y]) < 2 || (y != 0 && ((ft_strlen(map[y - 1]) != ft_strlen(map[y]) && ft_strchr(map[y], '\n')) || (ft_strlen(map[y - 1]) != (ft_strlen(map[y]) + 1) && !(ft_strchr(map[y], '\n'))))))
-			return (0);
+			return (NULL);
 		y++;
 	}
-	if (f_l_line(&*map, y) && mid_line(&*map, y) && PEC(&*map, &C) && FFL(&*map, C))
-		return (num_to_img());
-	return (0);
+	if (f_l_line(map, y) && mid_line(map, y) && PEC(map, &C) && FFL(map, argv[1], C))
+		return (map);
+	return (NULL);
 }
+
+//free before return(NULL);
