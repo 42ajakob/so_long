@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 03:26:49 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/30 07:42:11 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/06/30 07:55:13 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	free_double_ptr(char **ptr)
 
 static int	unlogical_function_for_norminette(t_check *ch, int fd)
 {
-	ch->map[ch->y] = ;
+	ch->map[ch->y] = get_next_line(fd);
 	if (ch->map[ch->y] == NULL)
 		return (0);
 	return (1);
