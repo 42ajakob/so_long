@@ -6,17 +6,14 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:34:51 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/30 07:18:09 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/06/30 08:03:28 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdlib.h>
-# include <stdio.h>
 # include <unistd.h>
-# include <string.h>
 # include "MLX42/MLX42.h"
 # include "libs/libft/libft.h"
 # include "libs/get_next_line/get_next_line.h"
