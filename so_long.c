@@ -6,11 +6,19 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:22:46 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/30 07:18:41 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/06/30 07:52:46 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	ft_error(char *str)
+{
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
+	exit(EXIT_FAILURE);
+}
 
 static int	move(int y, int x, t_img *img)
 {
@@ -87,17 +95,11 @@ int32_t	main(int argc, char **argv)
 
 	img.map = check_map(argc, &*argv);
 	if (!(img.map))
-	{
-		printf("Error\nGive me a valid map!\n");
-		return (1);
-	}
+		ft_error("Give me a valid Minecraft map!");
 	int_values(&img);
 	img.mlx = mlx_init((img.x - 1) * 64, img.y * 64, "Minecraft", true);
 	if (!img.mlx)
-	{
-		fprintf(stderr, "%s", mlx_strerror(mlx_errno));
-		exit(EXIT_FAILURE);
-	}
+		ft_error("MLX failed! D:");
 	img.y = 0;
 	img.x = 0;
 	tex_to_img(&img);
