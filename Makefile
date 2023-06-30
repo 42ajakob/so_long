@@ -21,20 +21,20 @@ HOMEBREW:
 	@brew update --force --quiet
 	@chmod -R go-w "$(brew --prefix)/share/zsh"
 
-rm42HOMEBREW:
-	@brew || rm -rf ~/homebrew
+rmHOMEBREW:
+	@rm -rf ~/homebrew
 
 GLFW:
-	@brew list glfw || brew install glfw
+	@brew install glfw
 
 rmGLFW:
-	@brew list glfw || brew uninstall glfw
+	@brew uninstall glfw
 
 CMAKE:
-	@brew list cmake || brew install cmake
+	@brew install cmake
 
 rmCMAKE:
-	@brew list cmake || brew uninstall cmake
+	@brew uninstall cmake
 
 install:
 	${MLX42} && ${42HOMEBREW} && $(GLFW) && $(CMAKE)

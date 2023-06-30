@@ -6,37 +6,68 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:34:51 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/28 03:54:10 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/06/30 07:18:09 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <math.h>
-#include "MLX42/MLX42.h"
-#include "libs/libft/libft.h"
-#include "libs/get_next_line/get_next_line.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <string.h>
+# include "MLX42/MLX42.h"
+# include "libs/libft/libft.h"
+# include "libs/get_next_line/get_next_line.h"
 
 typedef struct img_s
 {
+	mlx_t		*mlx;
 	char		**map;
-	mlx_t* 		mlx;
-	mlx_image_t	*W;
-	mlx_image_t	*FS;
-	int			F_S;
-	mlx_image_t *P;
-	mlx_image_t	*C;
-	int			Co;
-	mlx_image_t	*E;
-} img_t;
+	mlx_image_t	*p;
+	mlx_image_t	*c;
+	mlx_image_t	*e;
+	mlx_image_t	*w;
+	mlx_image_t	*s;
+	int			i_p;
+	int			i_c;
+	int			i_e;
+	int			i_w;
+	int			i_s;
+	int			x;
+	int			y;
+}	t_img;
+
+typedef struct texture_s
+{
+	mlx_texture_t	*steve;
+	mlx_texture_t	*stone;
+	mlx_texture_t	*dirt;
+	mlx_texture_t	*diamond_ore;
+	mlx_texture_t	*crafting_table;
+}	t_texture;
+
+typedef struct check_s
+{
+	char	**map;
+	int		i_c;
+	int		i_e;
+	int		x;
+	int		y;
+}	t_check;
 
 char	*get_next_line(int fd);
 char	**check_map(int argc, char **argv);
-int		DFS(char **grid, int x, int y, int *E, int *C);
+int		dfs(char **grid, int x, int y, t_check *ch);
+void	free_double_ptr(char **ptr);
+int		ffl(t_check *ch);
+int		rectangular(t_check *ch);
+int		f_l_line(t_check *ch);
+int		map_size(const char *argv);
+int		valid_name(const char *argv, const char *ber, int len);
+void	int_values(t_img *img);
+void	print_map(t_img *img);
+void	img_to_win(mlx_image_t *ch, int *i_char, int z, t_img *img);
 
 #endif
