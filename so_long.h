@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:34:51 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/30 08:03:28 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/07/03 15:35:42 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <unistd.h>
 # include "MLX42/MLX42.h"
-# include "libs/libft/libft.h"
+# include "libs/ft_printf/libft/libft.h"
+# include "libs/ft_printf/ft_printf.h"
 # include "libs/get_next_line/get_next_line.h"
 
 typedef struct img_s
@@ -34,6 +35,7 @@ typedef struct img_s
 	int			i_s;
 	int			x;
 	int			y;
+	int			i_mv;
 }	t_img;
 
 typedef struct texture_s

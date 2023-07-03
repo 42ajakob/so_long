@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:22:46 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/30 07:52:46 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/07/03 15:38:08 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ static int	move(int y, int x, t_img *img)
 	if (img->map[y / 64][x / 64] == 'E' && img->i_c == 0)
 	{
 		mlx_close_window(img->mlx);
+		img->i_mv++;
 		return (i);
 	}
 	else if (img->map[y / 64][x / 64] != 'E' && img->map[y / 64][x / 64] != '1')
 	{
 		img->p->instances[0].y = y;
 		img->p->instances[0].x = x;
+		img->i_mv++;
 		i++;
 	}
 	if (img->map[y / 64][x / 64] == 'C')
@@ -56,16 +58,16 @@ static void	my_keyhook(mlx_key_data_t keydata, void *param)
 		mlx_close_window(img->mlx);
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE
 		&& move(img->p->instances[0].y - 64, img->p->instances[0].x, param))
-		write(1, "<Up>\n", 5);
+		ft_printf("<Up %d>\n", img->i_mv);
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_RELEASE
 		&& move(img->p->instances[0].y + 64, img->p->instances[0].x, param))
-		write(1, "<Down>\n", 7);
+		ft_printf("<Down %d>\n", img->i_mv);
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE
 		&& move(img->p->instances[0].y, img->p->instances[0].x - 64, param))
-		write(1, "<Left>\n", 7);
+		ft_printf("<Left %d>\n", img->i_mv);
 	if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE
 		&& move(img->p->instances[0].y, img->p->instances[0].x + 64, param))
-		write(1, "<Right>\n", 8);
+		ft_printf("<Right %d>\n", img->i_mv);
 }
 
 static void	tex_to_img(t_img *img)
@@ -102,6 +104,7 @@ int32_t	main(int argc, char **argv)
 		ft_error("MLX failed! D:");
 	img.y = 0;
 	img.x = 0;
+	img.i_mv = 0;
 	tex_to_img(&img);
 	print_map(&img);
 	mlx_key_hook(img.mlx, &my_keyhook, &img);
