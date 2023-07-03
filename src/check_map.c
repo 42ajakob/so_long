@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 03:26:49 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/30 07:55:13 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/07/03 17:20:39 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	free_double_ptr(char **ptr)
 	free(ptr);
 }
 
-static int	unlogical_function_for_norminette(t_check *ch, int fd)
+static int	fuck_c_fuck_norminette_function(t_check *ch, int fd)
 {
 	ch->map[ch->y] = get_next_line(fd);
 	if (ch->map[ch->y] == NULL)
@@ -100,7 +100,7 @@ char	**check_map(int argc, char **argv)
 	if (!(ch.map))
 		return (NULL);
 	ch.map[map_size(argv[1]) + 1] = NULL;
-	while (unlogical_function_for_norminette(&ch, fd))
+	while (fuck_c_fuck_norminette_function(&ch, fd))
 		ch.y++;
 	if (ch.y > 2 && rectangular(&ch) && f_l_line(&ch)
 		&& mid_line(ch.map, ch.y) && pec(&ch) && ffl(&ch))

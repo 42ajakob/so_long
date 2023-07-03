@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 00:13:53 by ajakob            #+#    #+#             */
-/*   Updated: 2023/06/17 19:32:16 by ajakob           ###   ########.fr       */
+/*   Updated: 2023/07/03 17:13:26 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 1
 # endif
 
 void			ft1_strlcpy(char *dst, const char *src, size_t dstsize);
