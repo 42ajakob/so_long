@@ -1,4 +1,4 @@
-NAME	:= Minecraft
+NAME	:= so_long
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 LIBMLX	:= ./libs/MLX42
 
