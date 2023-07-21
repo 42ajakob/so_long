@@ -9,38 +9,11 @@ OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(NAME)
 
-MLX42:
+install:
 	@git clone https://github.com/codam-coding-college/MLX42.git $(LIBMLX)
 
-rmMLX42:
-	@rm -rf $(LIBMLX)
-
-HOMEBREW:
-	@git clone https://github.com/Homebrew/brew ~/homebrew
-	@eval "$(homebrew/bin/brew shellenv)"
-	@brew update --force --quiet
-	@chmod -R go-w "$(brew --prefix)/share/zsh"
-
-rmHOMEBREW:
-	@rm -rf ~/homebrew
-
-GLFW:
-	@brew install glfw
-
-rmGLFW:
-	@brew uninstall glfw
-
-CMAKE:
-	@brew install cmake
-
-rmCMAKE:
-	@brew uninstall cmake
-
-install:
-	${MLX42} && ${42HOMEBREW} && $(GLFW) && $(CMAKE)
-
 remove:
-	${rmMLX42} && ${rm42HOMEBREW}
+	@rm -rf $(LIBMLX)
 
 libmlx:
 	@cd libs/libft && make
@@ -64,4 +37,4 @@ re:
 	@make fclean
 	@make
 
-.PHONY: re, all, clean, fclean, libmlx, install, remove, MLX42, rmMLX42, 42HOMEBREW, rm42HOMEBREW, GLFW, rmGLFW, CMAKE, rmCMAKE
+.PHONY: re, all, clean, fclean, libmlx, install, remove
