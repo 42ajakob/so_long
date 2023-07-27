@@ -2,12 +2,12 @@ NAME	:= so_long
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 LIBMLX	:= ./libs/MLX42
 
-HEADERS	:= -I /Users/$(USER)/homebrew/include/ -I $(LIBMLX)/include/
-LIBS	:= $(LIBMLX)/build/libmlx42.a ./libs/libft/libft.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/homebrew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
+HEADERS	:= -I $(LIBMLX)/include/
+LIBS	:= $(LIBMLX)/build/libmlx42.a ./libs/libft/libft.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
 SRCS	:= $(shell find ./src -iname "*.c")
 OBJS	:= ${SRCS:.c=.o}
 
-all: libmlx $(NAME)
+all: libmlx $(NAME) Makefile
 
 install:
 	@git clone https://github.com/codam-coding-college/MLX42.git $(LIBMLX)
@@ -16,7 +16,7 @@ remove:
 	@rm -rf $(LIBMLX)
 
 libmlx:
-	@cd libs/libft && make
+	@make -C libs/libft/
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 %.o: %.c
@@ -26,11 +26,11 @@ $(NAME): $(OBJS)
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 
 clean:
-	@cd libs/libft && make clean
+	@make -C libs/libft/ clean
 	@rm -f $(OBJS) && rm -rf $(LIBMLX)/build
 
 fclean: clean
-	@cd libs/libft && make fclean
+	@make -C libs/libft/ fclean
 	@rm -f $(NAME)
 
 re:
