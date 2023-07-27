@@ -7,7 +7,7 @@ LIBS	:= $(LIBMLX)/build/libmlx42.a ./libs/libft/libft.a -ldl -Iinclude -lglfw -L
 SRCS	:= $(shell find ./src -iname "*.c")
 OBJS	:= ${SRCS:.c=.o}
 
-all: libmlx $(NAME) Makefile
+all: libmlx $(NAME)
 
 install:
 	@git clone https://github.com/codam-coding-college/MLX42.git $(LIBMLX)
