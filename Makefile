@@ -1,10 +1,10 @@
 NAME		:= so_long
 CFLAGS		:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
-LIBMLX		:= ./libs/MLX42
-LIBFTPRINTF := ./libs/ft_printf
+LIBMLX		:= libs/MLX42
+LIBFTPRINTF := libs/ft_printf
 
 HEADERS		:= -I $(LIBMLX)/include/
-LIBS		:= $(LIBMLX)/build/libmlx42.a ./libs/ft_printf/libftprintf.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
+LIBS		:= $(LIBMLX)/build/libmlx42.a $(LIBFTPRINTF)/libftprintf.a -ldl -Iinclude -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm -framework Cocoa -framework OpenGL -framework IOKit
 SRCS		:= $(shell find ./ -iname "*.c")
 OBJS		:= ${SRCS:.c=.o}
 
