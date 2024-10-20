@@ -11,7 +11,7 @@ OBJS		:= ${SRCS:.c=.o}
 all: libmlx $(NAME)
 
 install:
-	@git clone https://github.com/codam-coding-college/MLX42.git $(LIBMLX)
+	@git clone --branch v2.3.3 https://github.com/codam-coding-college/MLX42 $(LIBMLX)
 
 remove:
 	@rm -rf $(LIBMLX)
