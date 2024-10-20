@@ -6,7 +6,7 @@
 /*   By: ajakob <ajakob@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 03:26:49 by ajakob            #+#    #+#             */
-/*   Updated: 2023/09/23 08:02:28 by ajakob           ###   ########.fr       */
+/*   Updated: 2024/10/20 22:26:17 by ajakob           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,6 @@ void	free_double_ptr(char **ptr)
 	free(ptr);
 }
 
-static int	fuck_c_fuck_norminette_function(t_check *ch, int fd)
-{
-	ch->map[ch->y] = get_next_line(fd);
-	if (ch->map[ch->y] == NULL)
-		return (0);
-	return (1);
-}
-
 char	**check_map(int argc, char **argv)
 {
 	t_check	ch;
@@ -100,9 +92,13 @@ char	**check_map(int argc, char **argv)
 	if (!(ch.map))
 		return (NULL);
 	ch.map[map_size(argv[1]) + 1] = NULL;
-	while (fuck_c_fuck_norminette_function(&ch, fd))
-		ch.y++;
-	if (ch.y > 2 && rectangular(&ch) && f_l_line(&ch)
+	ch.map[ch.y] = get_next_line(fd);
+	while (ch.map[ch.y++])
+		ch.map[ch.y] = get_next_line(fd);
+	
+	for(int i  = 0; ch.y != i; i++)
+		ft_printf("%s", ch.map[i]);
+	if (--ch.y > 2 && rectangular(&ch) && f_l_line(&ch)
 		&& mid_line(ch.map, ch.y) && pec(&ch) && ffl(&ch))
 		return (ch.map);
 	return (free_double_ptr(ch.map), NULL);
